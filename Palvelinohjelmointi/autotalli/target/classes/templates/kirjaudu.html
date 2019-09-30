@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+     	<title>Autotalli</title>
+       	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+    <body>
+	    <div class="container">
+		    <div class="jumbotron jumbotron-fluid">
+				<div class="container">
+					<h1 class="display-4">Autotalli</h1>
+					<p class="lead">Harjoitustyö palvelinohjelmointi-kurssille</p>
+				</div>
+			</div>
+	     	<div>
+		        <div class="alert alert-danger" th:if="${param.error}">Väärä käyttäjätunnus tai salasana.</div>
+		        <div class="alert alert-warning" th:if="${param.logout}">Olet kirjautunut ulos.</div>
+		        <form th:action="@{/kirjaudu}" method="post">
+		            <div><label> Käyttäjätunnus<input type="text" name="username" class="form-control"/> </label></div>
+		            <div><label> Salasana<input type="password" name="password" class="form-control"/> </label></div>
+		            <hr>
+		            <div><input type="submit" value="Kirjaudu sisään" class="btn btn-primary"/></div>
+		        </form>
+	       </div>
+       </div>
+    </body>
+</html>

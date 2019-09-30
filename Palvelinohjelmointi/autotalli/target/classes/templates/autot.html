@@ -1,0 +1,49 @@
+<!DOCTYPEhtml>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<title>Autotalli</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<div style="padding:20px 0">
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Kirjaudu ulos" class="btn btn-danger"/> Käyttäjä: [[${#httpServletRequest.remoteUser}]]
+			</form>
+		</div>
+		<div class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1 class="display-4">Autotalli</h1>
+				<p class="lead">Harjoitustyö palvelinohjelmointi-kurssille</p>
+			</div>
+		</div>
+		<table class="table table-striped">
+			<tr>
+				<th>Merkki</th>
+				<th>Malli</th>
+				<th>Rekisterinumero</th>
+				<th>Vuosimalli</th>
+				<th colspan="3"></th>
+			</tr>
+			<tr th:each="auto : ${autot}">
+				<td th:text="${auto.merkki}"></td>
+				<td th:text="${auto.malli}"></td>
+				<td th:text="${auto.rekisterinumero}"></td>
+				<td th:text="${auto.vuosimalli}"></td>
+				<td>
+					<ul style="list-style: none;" th:if="${not #lists.isEmpty(auto.kuvat)}">
+						<li th:each = "kuva : ${auto.kuvat}">
+							<a th:href="@{/kuva/{id}(id=${kuva.kuvaid})}" th:text="${kuva.nimi}"></a>
+						<li>
+					</ul>
+				</td>
+				<td><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/auto/{id}(id=${auto.id})}">Muokkaa</a></td>
+				<td><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/poista/{id}(id=${auto.id})}">Poista</a></td>
+			</tr>
+		</table>
+		<hr />
+		<a sec:authorize="hasAuthority('ADMIN')" href="auto" class="btn btn-primary">Lisää uusi auto</a>
+	</div>
+</body>
+</html>
